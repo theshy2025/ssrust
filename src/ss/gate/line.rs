@@ -27,7 +27,6 @@ impl Gate {
         let mut working = 0;
         let mut ready = 0;
         
-        let mut old:Vec<usize> = Vec::new();
         let mut dead:Vec<usize> = Vec::new();
 
         for (_,line) in self.lines.iter_mut() {
@@ -46,20 +45,17 @@ impl Gate {
                 if line.is_working() {
                     working = working + 1;
                 } else if line.is_old() {
-                    old.push(id);
+                    dead.push(id);
                 }
             }
         }
         
         if true {
-            self.logger.add(format!("total:{},hk:{},working:{},ready:{},old:{},dead:{}",self.lines.len(),hk,working,ready,old.len(),dead.len()));
+            self.logger.add(format!("total:{},hk:{},working:{},ready:{},dead:{}",self.lines.len(),hk,working,ready,dead.len()));
         }
 
-        
-
-        for _id in dead {
-            //self.lines.remove(&Token(id));
-            //
+        for id in dead {
+            self.lines.remove(&Token(id));
         }
 
         if working > 0 && ready < CHICK_INIT_NUM/2 {
