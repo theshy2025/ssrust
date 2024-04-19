@@ -52,6 +52,7 @@ pub struct Line {
 }
 
 pub struct Gate {
+    next_id:usize,
     lines:HashMap<Token,Line>,
     p:Poll,
     dm:Option<DnsManager>,

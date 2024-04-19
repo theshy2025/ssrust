@@ -67,7 +67,7 @@ impl Gate {
                     Ok(addr) => {
                         match TcpStream::connect(addr) {
                             Ok(stream) => {
-                                let new_line_id = stream.local_addr().unwrap().port() as usize;
+                                let new_line_id = self.next_id();
                                 self.new_line(new_line_id, id, LineType::World, stream);
                                 let new_line = self.lines.get_mut(&Token(new_line_id)).unwrap();
                                 new_line.set_website_host(ip_port);

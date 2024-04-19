@@ -17,7 +17,7 @@ impl Gate {
         let mut listener = TcpListener::bind(addr).unwrap();
         p.registry().register(&mut listener, GATE, Interest::READABLE).unwrap();
         let logger = Log::create("gate");
-        Gate { p , listener , lines:HashMap::new() , dm:None, logger }
+        Gate { next_id:1, p , listener , lines:HashMap::new() , dm:None, logger }
     }
 
     pub fn start(&mut self) {
@@ -85,11 +85,16 @@ impl Gate {
         if CHICK_INIT_NUM > 0 {
             self.find_chick_for_john(stream);
         } else {
-            let id = stream.peer_addr().unwrap().port() as usize;
+            let id = self.next_id();
             self.new_line(id, 0, LineType::MainLand, stream);
             let line = self.lines.get_mut(&Token(id)).unwrap();
             line.say_hello_to_mainland();
         }
+    }
+
+    fn next_id(&mut self) -> usize {
+        self.next_id = self.next_id + 1;
+        self.next_id
     }
 
 }
