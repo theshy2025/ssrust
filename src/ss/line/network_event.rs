@@ -39,6 +39,7 @@ impl NetWorkEvent for Line {
     }
 
     fn on_recv(&mut self,buf:&[u8]) {
+        self.traffic = self.traffic + buf.len();
         self.net_data.extend(buf.iter());
     }
 

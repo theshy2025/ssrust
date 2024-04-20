@@ -27,6 +27,7 @@ impl Line {
             website_host: Default::default(),
             birth: Instant::now(),
             logger,
+            traffic: 0,
         }
     }
 

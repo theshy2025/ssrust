@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, time::Instant};
 
 use mio::{event::Event, net::{TcpListener, TcpStream}, Events, Interest, Poll, Token};
 
@@ -54,9 +54,12 @@ impl Gate {
     fn poll(&mut self) {
         let mut events = Events::with_capacity(16);
         self.p.poll(&mut events, None).unwrap();
+        let n = events.into_iter().count();
+        let t = Instant::now();
         for event in events.iter() {
             self.on_event(event);
         }
+        self.logger.add(format!("event count:{},time use:{:?}",n,t.elapsed().as_millis()));
     }
 
     fn on_event(&mut self,event:&Event) {

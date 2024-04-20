@@ -1,4 +1,4 @@
-use std::io::{self, Error, ErrorKind};
+use std::{io::{self, Error, ErrorKind}, time::Instant};
 
 use mio::event::Event;
 
@@ -63,9 +63,10 @@ pub trait NetWorkEvent {
     fn read(&mut self) {
         loop {
             let mut buf = [0;BUFF_SIZE];
+            let t = Instant::now();
             match self.recv(&mut buf) {
                 Ok(n) => {
-                    self.event_log(format!("recv {} bytes from network {:?}",n,self.line_type()));
+                    self.event_log(format!("recv {} bytes from network {:?},{:?}",n,self.line_type(),t.elapsed().as_nanos()));
                     if n > 0 {
                         self.on_recv(&buf[..n]);
                     } else {

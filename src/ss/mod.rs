@@ -49,6 +49,7 @@ pub struct Line {
     mem_data:Vec<u8>,//data from pair
     garbage:Vec<u8>,//data should trans to pair (clone and clear) next frame
     logger:Log,
+    traffic:usize,
 }
 
 pub struct Gate {

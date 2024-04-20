@@ -6,6 +6,7 @@ impl Line {
     pub fn turn_into_close(&mut self) {
         self.log(format!("turn_into_close"));
         self.set_status(Status::Close);
+        log::im(format!("[{}][{}]{}",self.id,self.pair_id,self.traffic));
     }
 
     pub fn turn_into_read_close(&mut self) {

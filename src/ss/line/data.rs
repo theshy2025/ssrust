@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 use crate::ss::{network_event::NetWorkEvent, Line, Status};
 
 impl Line {
@@ -51,8 +53,10 @@ impl Line {
     }
     
     pub fn move_out_garbage(&mut self) -> Vec<u8> {
-        self.log(format!("move_out_garbage {}",self.garbage.len()));
+        let len = self.garbage.len();
+        let t = Instant::now();
         let ret = self.garbage.clone();
+        self.log(format!("move_out_garbage {},{}",len,t.elapsed().as_nanos()));
         self.clear_garbage();
         ret
     }
