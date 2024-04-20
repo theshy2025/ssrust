@@ -56,7 +56,7 @@ impl Line {
         let len = self.garbage.len();
         let t = Instant::now();
         let ret = self.garbage.clone();
-        self.log(format!("move_out_garbage {},{}",len,t.elapsed().as_nanos()));
+        self.log(format!("move_out_garbage {},{}",len,t.elapsed().as_micros()));
         self.clear_garbage();
         ret
     }

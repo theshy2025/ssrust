@@ -66,7 +66,7 @@ pub trait NetWorkEvent {
             let t = Instant::now();
             match self.recv(&mut buf) {
                 Ok(n) => {
-                    self.event_log(format!("recv {} bytes from network {:?},{:?}",n,self.line_type(),t.elapsed().as_nanos()));
+                    self.event_log(format!("recv {} bytes from network {:?},{:?}",n,self.line_type(),t.elapsed().as_micros()));
                     if n > 0 {
                         self.on_recv(&buf[..n]);
                     } else {
